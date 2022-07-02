@@ -12,6 +12,12 @@ const NumBaseball: NextPage<Props> = ({ nums, setNums }) => {
       <div className="background" />
 
       <div className="container">
+        <div className="result">
+          <div className="result-item">Strike : {1}</div>
+          <div className="result-item">Ball : {0}</div>
+          <div className="result-item">Out : {2}</div>
+        </div>
+
         <div className="pc-nums">
           <PcCard number={1} />
           <PcCard number={1} />
@@ -34,7 +40,7 @@ const NumBaseball: NextPage<Props> = ({ nums, setNums }) => {
           flex-direction: column;
           margin: 5% auto;
           width: 60%;
-          height: 60vh;
+          height: 80vh;
           border: 1px solid black;
           background-color: #fefefe;
           padding: 1rem;
@@ -61,11 +67,24 @@ const NumBaseball: NextPage<Props> = ({ nums, setNums }) => {
           z-index: -1000;
         }
 
+        .result {
+          height: 10%;
+          display: flex;
+          border: 1px solid grey;
+          margin-bottom: 1rem;
+          align-items: center;
+          justify-content: center;
+        }
+
         .pc-nums,
         .user-nums {
           display: flex;
-          height: 50%;
+          height: 45%;
           justify-content: space-between;
+        }
+
+        .result-item {
+          margin: 0 1rem;
         }
       `}</style>
     </div>
