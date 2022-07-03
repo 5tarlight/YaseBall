@@ -1,12 +1,29 @@
 import { NextPage } from "next";
+import { useEffect } from "react";
 import PcCard from "./PcCard";
 
 interface Props {
   nums: number[];
   setNums: (nums: number[]) => void;
+  uInput: number[];
+  setUserInput: (nums: number[]) => void;
 }
 
-const NumBaseball: NextPage<Props> = ({ nums, setNums }) => {
+const NumBaseball: NextPage<Props> = ({
+  nums,
+  setNums,
+  setUserInput,
+  uInput,
+}) => {
+  useEffect(() => {
+    const arr: number[] = [];
+    for (let i = 0; i < 3; i++) {
+      arr.push(Math.floor(Math.random() * 9) + 1);
+    }
+
+    setNums(arr);
+  }, []);
+
   return (
     <div>
       <div className="background" />
@@ -19,9 +36,9 @@ const NumBaseball: NextPage<Props> = ({ nums, setNums }) => {
         </div>
 
         <div className="pc-nums">
-          <PcCard number={1} />
-          <PcCard number={1} />
-          <PcCard number={1} />
+          <PcCard number={nums[0]} />
+          <PcCard number={nums[1]} />
+          <PcCard number={nums[2]} />
         </div>
 
         <div className="user-nums">
@@ -30,10 +47,6 @@ const NumBaseball: NextPage<Props> = ({ nums, setNums }) => {
           <div className="testcard">3</div>
         </div>
       </div>
-
-      {nums.map((n, i) => (
-        <div key={i}>{n}</div>
-      ))}
       <style jsx>{`
         .container {
           display: flex;
