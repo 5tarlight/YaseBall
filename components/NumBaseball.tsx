@@ -1,19 +1,20 @@
 import { NextPage } from "next";
 import { useEffect } from "react";
 import PcCard from "./PcCard";
+import UserCard from "./UserCard";
 
 interface Props {
   nums: number[];
   setNums: (nums: number[]) => void;
   uInput: number[];
-  setUserInput: (nums: number[]) => void;
+  handleChange: (i: number, v: number) => void;
 }
 
 const NumBaseball: NextPage<Props> = ({
   nums,
   setNums,
-  setUserInput,
   uInput,
+  handleChange,
 }) => {
   useEffect(() => {
     const arr: number[] = [];
@@ -42,9 +43,7 @@ const NumBaseball: NextPage<Props> = ({
         </div>
 
         <div className="user-nums">
-          <div className="testcard">1</div>
-          <div className="testcard">2</div>
-          <div className="testcard">3</div>
+          <UserCard uInputs={uInput} handleChange={handleChange} />
         </div>
       </div>
       <style jsx>{`

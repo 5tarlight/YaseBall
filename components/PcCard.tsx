@@ -8,6 +8,7 @@ const PcCard: NextPage<Props> = ({ number }) => {
   return (
     <div>
       {number}
+
       <style jsx>{`
         div {
           display: flex;
