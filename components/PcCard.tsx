@@ -8,6 +8,7 @@ const PcCard: NextPage<Props> = ({ number }) => {
   return (
     <div>
       {number}
+
       <style jsx>{`
         div {
           display: flex;
@@ -31,6 +32,7 @@ const PcCard: NextPage<Props> = ({ number }) => {
             4.4px 6.6px 29.2px rgba(0, 0, 0, 0.031),
             6.8px 10.1px 45px rgba(0, 0, 0, 0.025),
             12px 18px 80px rgba(0, 0, 0, 0.017);
+          user-select: none;
         }
       `}</style>
     </div>

@@ -1,40 +1,95 @@
 import { NextPage } from "next";
+import { useEffect, useState } from "react";
 import PcCard from "./PcCard";
+import UserCard from "./UserCard";
 
 interface Props {
   nums: number[];
   setNums: (nums: number[]) => void;
+  uInput: number[];
+  handleChange: (i: number, v: number) => void;
 }
 
-const NumBaseball: NextPage<Props> = ({ nums, setNums }) => {
+const NumBaseball: NextPage<Props> = ({
+  nums,
+  setNums,
+  uInput,
+  handleChange,
+}) => {
+  const [status, setStatus] = useState({
+    s: 0,
+    b: 0,
+    o: 0,
+  });
+
+  const updateStatus = () => {
+    const newStatus = {
+      s: 0,
+      b: 0,
+      o: 0,
+    };
+
+    const strikes = [];
+    for (let i = 0; i < 3; i++) {
+      if (uInput[i] === nums[i]) {
+        strikes.push(i);
+        newStatus.s = newStatus.s + 1;
+      }
+    }
+
+    for (let i = 0; i < 3; i++) {
+      if (strikes.includes(i)) continue;
+      const index = nums.indexOf(uInput[i]);
+
+      if (index !== -1 && !strikes.includes(i)) newStatus.b = newStatus.b + 1;
+    }
+
+    newStatus.o = 3 - (newStatus.b + newStatus.s);
+
+    setStatus(newStatus);
+  };
+
+  useEffect(() => {
+    updateStatus();
+  }, [uInput]);
+
+  useEffect(() => {
+    const arr: number[] = [];
+    for (let i = 0; i < 3; i++) {
+      arr.push(Math.floor(Math.random() * 9) + 1);
+    }
+
+    setNums(arr);
+  }, []);
+
   return (
     <div>
       <div className="background" />
 
       <div className="container">
+        <div className="result">
+          <div className="result-item">Strike : {status.s}</div>
+          <div className="result-item">Ball : {status.b}</div>
+          <div className="result-item">Out : {status.o}</div>
+        </div>
+
         <div className="pc-nums">
-          <PcCard number={1} />
-          <PcCard number={1} />
-          <PcCard number={1} />
+          <PcCard number={nums[0]} />
+          <PcCard number={nums[1]} />
+          <PcCard number={nums[2]} />
         </div>
 
         <div className="user-nums">
-          <div className="testcard">1</div>
-          <div className="testcard">2</div>
-          <div className="testcard">3</div>
+          <UserCard uInputs={uInput} handleChange={handleChange} />
         </div>
       </div>
-
-      {nums.map((n, i) => (
-        <div key={i}>{n}</div>
-      ))}
       <style jsx>{`
         .container {
           display: flex;
           flex-direction: column;
           margin: 5% auto;
           width: 60%;
-          height: 60vh;
+          height: 80vh;
           border: 1px solid black;
           background-color: #fefefe;
           padding: 1rem;
@@ -61,11 +116,24 @@ const NumBaseball: NextPage<Props> = ({ nums, setNums }) => {
           z-index: -1000;
         }
 
+        .result {
+          height: 10%;
+          display: flex;
+          border: 1px solid grey;
+          margin-bottom: 1rem;
+          align-items: center;
+          justify-content: center;
+        }
+
         .pc-nums,
         .user-nums {
           display: flex;
-          height: 50%;
+          height: 45%;
           justify-content: space-between;
+        }
+
+        .result-item {
+          margin: 0 1rem;
         }
       `}</style>
     </div>
