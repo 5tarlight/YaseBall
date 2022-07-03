@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PcCard from "./PcCard";
 import UserCard from "./UserCard";
 
@@ -16,6 +16,43 @@ const NumBaseball: NextPage<Props> = ({
   uInput,
   handleChange,
 }) => {
+  const [status, setStatus] = useState({
+    s: 0,
+    b: 0,
+    o: 0,
+  });
+
+  const updateStatus = () => {
+    const newStatus = {
+      s: 0,
+      b: 0,
+      o: 0,
+    };
+
+    const strikes = [];
+    for (let i = 0; i < 3; i++) {
+      if (uInput[i] === nums[i]) {
+        strikes.push(i);
+        newStatus.s = newStatus.s + 1;
+      }
+    }
+
+    for (let i = 0; i < 3; i++) {
+      if (strikes.includes(i)) continue;
+      const index = nums.indexOf(uInput[i]);
+
+      if (index !== -1 && !strikes.includes(i)) newStatus.b = newStatus.b + 1;
+    }
+
+    newStatus.o = 3 - (newStatus.b + newStatus.s);
+
+    setStatus(newStatus);
+  };
+
+  useEffect(() => {
+    updateStatus();
+  }, [uInput]);
+
   useEffect(() => {
     const arr: number[] = [];
     for (let i = 0; i < 3; i++) {
@@ -31,9 +68,9 @@ const NumBaseball: NextPage<Props> = ({
 
       <div className="container">
         <div className="result">
-          <div className="result-item">Strike : {1}</div>
-          <div className="result-item">Ball : {0}</div>
-          <div className="result-item">Out : {2}</div>
+          <div className="result-item">Strike : {status.s}</div>
+          <div className="result-item">Ball : {status.b}</div>
+          <div className="result-item">Out : {status.o}</div>
         </div>
 
         <div className="pc-nums">

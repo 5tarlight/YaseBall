@@ -15,13 +15,14 @@ const UserCard: NextPage<Props> = ({ uInputs, handleChange }) => {
             value={v}
             type="number"
             key={i}
+            readOnly
             onKeyDown={(e) => {
               e.stopPropagation();
               e.preventDefault();
               const { key } = e;
               const v = parseInt(key);
               if (isNaN(v) || v == 0) return;
-              handleChange(i, v);
+              return handleChange(i, v);
             }}
           />
         );
