@@ -62,7 +62,7 @@ int main() {
     } while (re);
 
     if (strike == 3)
-      std::cout <<  "" << num << std::endl;
+      std::cout <<  "시도 횟수 : " << num << std::endl;
   }
 }
 
