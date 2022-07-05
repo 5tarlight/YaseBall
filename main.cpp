@@ -40,7 +40,7 @@ int main() {
       findForAnswer(table, choice, forAnswer);
 
       printf(
-        "[%d] 이건 모르겠다 %d %d %d\n",
+        "[%d] 현재 숫자 %d %d %d\n",
         num,
         forAnswer[0],
         forAnswer[1],
@@ -62,7 +62,7 @@ int main() {
     } while (re);
 
     if (strike == 3)
-      std::cout << "결과인가 " << num << std::endl;
+      std::cout <<  "" << num << std::endl;
   }
 }
 
@@ -92,8 +92,8 @@ int findBall(int *forAnswer, int *answer) {
 
 void findForAnswer(int (*table)[4], int &choice, int *forAnswer) {
   forAnswer[0] = table[choice][0];
+  forAnswer[1] = table[choice][1];
   forAnswer[2] = table[choice][2];
-  forAnswer[3] = table[choice][3];
 }
 
 void first(int (*table)[4], int &total) {
@@ -161,10 +161,10 @@ void remove(int (*table)[4], int &total) {
     for (int i = 0; i < total; i++) {
       for (int j = 0; j < total; j++) {
         if (table[j][3] == -1) {
-          table[j][0] = table[total-1][0];
-          table[j][1] = table[total-1][1];
-          table[j][2] = table[total-1][2];
-          table[j][3] = table[total-1][3];
+          table[j][0] = table[total - 1][0];
+          table[j][1] = table[total - 1][1];
+          table[j][2] = table[total - 1][2];
+          table[j][3] = table[total - 1][3];
           table[total-1][3] = -1;
           total--;
         }
