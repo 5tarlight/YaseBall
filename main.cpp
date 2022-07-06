@@ -102,6 +102,7 @@ void first(int (*table)[4], int &total) {
   for (int i = 0; i < num; i++) {
     for (int j = 0; j < num; j++) {
       for (int k = 0; k < num; k++) {
+        // std::cout << total << std::endl;
         table[total][0] = i + 1;
         table[total][1] = j + 1;
         table[total][2] = k + 1;

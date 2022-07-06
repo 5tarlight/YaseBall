@@ -61,18 +61,13 @@ const Algorithm: NextPage = () => {
     for (let i = 0; i < num; i++) {
       for (let j = 0; j < num; j++) {
         for (let k = 0; k < num; k++) {
+          console.log(total);
           table[total][0] = i + 1;
           table[total][1] = j + 1;
           table[total][2] = k + 1;
 
           if (i == j || i == k || j == k) table[total][3] = -1;
           else table[total][3] = 1;
-
-          // if (num == 10) {
-          //   table[total][0]--;
-          //   table[total][1]--;
-          //   table[total][2]--;
-          // }
 
           total++;
         }
