@@ -12,10 +12,21 @@ const Algorithm: NextPage = () => {
     setUserInput(input);
   };
 
+  const queue: number[][] = [];
+
   const change = (v: number[]) => {
-    v.forEach((n, i) => {
-      handleChange(i, n);
-    });
+    queue.push(v);
+  };
+
+  const sleep = (ms: number) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
+
+  const ani = async () => {
+    for (let q of queue) {
+      setUserInput(q);
+      await sleep(500);
+    }
   };
 
   const printll = (table: number[][], total: number) => {
@@ -61,7 +72,6 @@ const Algorithm: NextPage = () => {
     for (let i = 0; i < num; i++) {
       for (let j = 0; j < num; j++) {
         for (let k = 0; k < num; k++) {
-          console.log(total);
           table[total][0] = i + 1;
           table[total][1] = j + 1;
           table[total][2] = k + 1;
@@ -69,6 +79,7 @@ const Algorithm: NextPage = () => {
           if (i == j || i == k || j == k) table[total][3] = -1;
           else table[total][3] = 1;
 
+          // total = Math.min(719, total + 1);
           total++;
         }
       }
@@ -139,8 +150,9 @@ const Algorithm: NextPage = () => {
   };
 
   const start = () => {
-    const table = Array.apply(null, Array(720)).map(() => [-1, -1, -1, -1]);
-    console.log(table);
+    const table = Array.apply(null, Array(9 * 9 * 9)).map(() => [
+      -1, -1, -1, -1,
+    ]);
     let total = 0;
     let choice = 0;
     const forAnswer = [-1, -1, -1];
@@ -155,8 +167,8 @@ const Algorithm: NextPage = () => {
       num++;
       choice = Math.floor(Math.random() * total) + 1;
       findForAnswer(table, choice, forAnswer);
+      console.log("update!", forAnswer);
 
-      console.log(num, ":", forAnswer.join(", "));
       change(forAnswer);
 
       strike = findStrike(forAnswer, nums);
@@ -169,6 +181,7 @@ const Algorithm: NextPage = () => {
 
       if (total == 0) {
         console.log("정답!");
+        // ani();
         break;
       }
     } while (re);
